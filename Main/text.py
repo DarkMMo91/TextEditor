@@ -6,12 +6,12 @@ root = Tk()
 
 #Constante
 
-WHITE = "FFFFF"
+WHITE = "FFFFFF"
 #Variabili
 
 root.geometry("820x820")
 root.title("Teditor")
-root.iconbitmap("C:/Users/39339/Desktop/Python/TextEditor/Teditor_Icon.ico")
+root.iconbitmap("C:/Users/39339/Desktop/Python/TextEditor/Main/Teditor_Icon.ico")
 
 #Funzioni
 

@@ -1,6 +1,7 @@
 import random
 from tkinter import *
 from tkinter import filedialog
+from tkinter import font
 
 #MainRoot
 root = Tk()
@@ -13,12 +14,11 @@ Black = "black"
 #Variabili
 
 color = White
-
 #Variabili per la finestra
 
 root.geometry("1280x720")
 root.title("Teditor")
-root.iconbitmap("Main/Teditor_Icon.ico")
+root.iconbitmap("Teditor_Icon.ico")
 
 #Funzioni della MainBar
 
@@ -51,12 +51,40 @@ def Generazione_numeri():
 
     InputField.insert("1.0", str(r))
 
+def Generazione_Nomi():
 
-    
+    k = random.randint(0, 7)
+
+    name_List = ("Pedro", "Alessando", "Maria", "Carlo", "Anthony", "Carla", "Alfredo", "Francesco")
+
+    InputField.insert("1.0", name_List[k])
+
+def Bold_it():
+    bold_font = font.Font(InputField, InputField.cget("font"))
+    bold_font.configure(weight="bold")
+
+    InputField.tag_configure("bold", font=bold_font)
+
+    current_tags = InputField.tag_names("sel.first")
+
+    if "bold" in current_tags:
+        InputField.tag_remove("bold", "sel.first", "sel.last")
+    else:
+        InputField.tag_add("bold", "sel.first", "sel.last")
 #Funzioni della SottoBar
+
+#Tuple
+
+
+#Frame
+
+tool_frame = Frame(root)
+tool_frame.pack(fill=X)
 
 #Label
 InputField= Text(root, width=232, border=5, background=color)
+
+Bold_Botton = Button(tool_frame, text="Bold", command=Bold_it)
 
 #MainBAr
 
@@ -76,6 +104,7 @@ FuncMenu = Menu(MainBar, tearoff=0)
 
 FuncMenu.add_command(label="Annientamento", command=Distruzione)
 FuncMenu.add_command(label="Generazione di Numeri", command=Generazione_numeri)
+FuncMenu.add_command(label="Generazione di Nomi", command=Generazione_Nomi)
 
 
 MainBar.add_cascade(label="File", menu=filemenu)
@@ -84,9 +113,11 @@ MainBar.add_cascade(label="Funzioni", menu=FuncMenu)
 
 
 #Posizioni
-InputField.grid(row=1, column=0, ipady=256)
+InputField.pack()
 
-#MainLoop ed altro
+Bold_Botton.grid(row=0, column=0, sticky=W)
+
+#MainLoop e config
 
 root.config(menu=MainBar)
 root.mainloop()

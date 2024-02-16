@@ -18,7 +18,7 @@ color = White
 
 root.geometry("1280x720")
 root.title("Teditor")
-root.iconbitmap("Teditor_Icon.ico")
+root.iconbitmap("IcoFile/Teditor_Icon.ico")
 
 #Funzioni della MainBar
 
@@ -59,9 +59,11 @@ def Generazione_Nomi():
 
     InputField.insert("1.0", name_List[k])
 
+#Funzioni della SottoBar
+    
 def Bold_it():
     bold_font = font.Font(InputField, InputField.cget("font"))
-    bold_font.configure(weight="bold")
+    bold_font.configure(weight="bold", size=28)
 
     InputField.tag_configure("bold", font=bold_font)
 
@@ -71,7 +73,19 @@ def Bold_it():
         InputField.tag_remove("bold", "sel.first", "sel.last")
     else:
         InputField.tag_add("bold", "sel.first", "sel.last")
-#Funzioni della SottoBar
+
+def italic():
+    italic_font = font.Font(InputField, InputField.cget("font"))
+    italic_font.configure(slant="italic")
+
+    InputField.tag_configure("italic", font=italic_font)
+
+    current_tags = InputField.tag_names("sel.first")
+
+    if "italic" in current_tags:
+        InputField.tag_remove("italic", "sel.first", "sel.last")
+    else:
+        InputField.tag_add("italic", "sel.first", "sel.last")
 
 #Tuple
 
@@ -85,6 +99,7 @@ tool_frame.pack(fill=X)
 InputField= Text(root, width=232, border=5, background=color)
 
 Bold_Botton = Button(tool_frame, text="Bold", command=Bold_it)
+Italic_Botton = Button(tool_frame, text="Italic", command=italic)
 
 #MainBAr
 
@@ -113,9 +128,10 @@ MainBar.add_cascade(label="Funzioni", menu=FuncMenu)
 
 
 #Posizioni
-InputField.pack()
+InputField.pack(side=LEFT, ipady=250)
 
 Bold_Botton.grid(row=0, column=0, sticky=W)
+Italic_Botton.grid(row=0, column=1)
 
 #MainLoop e config
 

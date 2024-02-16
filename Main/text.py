@@ -22,7 +22,7 @@ root.iconbitmap("IcoFile/Teditor_Icon.ico")
 
 #Funzioni della MainBar
 
-def Salva_File():
+def Salva_file():
     global InputField
     file = filedialog.asksaveasfile(defaultextension=".txt", filetypes=[("File di testo", ".txt"),
                                                                         ("File HTML" , ".html"),
@@ -32,7 +32,7 @@ def Salva_File():
     file.write(t)
     file.close            
 
-def Apri_File():
+def Apri_file():
     filepath = filedialog.askopenfilename(title="Vuoi aprire un file?",filetypes=[("File di Testo", ".txt"), ("Tutti i tipi di file", ".*")])
 
     file = open(filepath, "r")
@@ -43,6 +43,10 @@ def Apri_File():
 def Riferimento():
     pass
 
+def Quit_app():
+    root.quit()
+
+#Funzioni della MainBar // Sotto Menù funzioni
 def Distruzione():
     InputField.delete("1.0", END)
 
@@ -51,19 +55,21 @@ def Generazione_numeri():
 
     InputField.insert("1.0", str(r))
 
-def Generazione_Nomi():
+def Generazione_nomi():
 
-    k = random.randint(0, 7)
+    k = random.randint(0, 12)
 
-    name_List = ("Pedro", "Alessando", "Maria", "Carlo", "Anthony", "Carla", "Alfredo", "Francesco")
+    name_List = ("Pedro", "Alessando", "Maria", "Carlo", "Anthony", "Carla", "Alfredo", "Francesco", "Francesca", "Simone", "Daniel", "Antonio", "Jake")
 
     InputField.insert("1.0", name_List[k])
 
+def Generazione_citta():
+    pass
 #Funzioni della SottoBar
     
 def Bold_it():
     bold_font = font.Font(InputField, InputField.cget("font"))
-    bold_font.configure(weight="bold", size=28)
+    bold_font.configure(weight="bold")
 
     InputField.tag_configure("bold", font=bold_font)
 
@@ -87,8 +93,37 @@ def italic():
     else:
         InputField.tag_add("italic", "sel.first", "sel.last")
 
-#Tuple
+def underline():
+    
+    underline_font = font.Font(InputField, InputField.cget("font"))
+    underline_font.configure(underline=TRUE)
 
+    InputField.tag_configure("underline", font=underline_font)
+
+    current_tags = InputField.tag_names("sel.first")
+
+    if "underline" in current_tags:
+        InputField.tag_remove("underline", "sel.first", "sel.last")
+    else:
+        InputField.tag_add("underline", "sel.first", "sel.last")
+
+def overstrike():
+    
+    overstrike_font = font.Font(InputField, InputField.cget("font"))
+    overstrike_font.configure(overstrike=TRUE)
+
+    InputField.tag_configure("over", font=overstrike_font)
+
+    current_tags = InputField.tag_names("sel.first")
+
+    if "over" in current_tags:
+        InputField.tag_remove("over", "sel.first", "sel.last")
+    else:
+        InputField.tag_add("over", "sel.first", "sel.last")
+
+def add_highlighter():
+   InputField.tag_add("start", "sel.first","sel.last")
+   InputField.tag_config("start", background= "yellow", foreground= "Blue")
 
 #Frame
 
@@ -100,6 +135,9 @@ InputField= Text(root, width=232, border=5, background=color)
 
 Bold_Botton = Button(tool_frame, text="Bold", command=Bold_it)
 Italic_Botton = Button(tool_frame, text="Italic", command=italic)
+Underline_Botton = Button(tool_frame, text="Sottolinea", command=underline)
+Overstrike_Botton = Button(tool_frame, text="Overstrike", command=overstrike)
+Highlight_Botton = Button(tool_frame, text="Evidenzia", command=add_highlighter)
 
 #MainBAr
 
@@ -107,8 +145,9 @@ MainBar = Menu(root)
 
 filemenu = Menu(MainBar, tearoff=0)
 
-filemenu.add_command(label="Open", command=Apri_File)
-filemenu.add_command(label="Save", command=Salva_File)
+filemenu.add_command(label="Open", command=Apri_file)
+filemenu.add_command(label="Save", command=Salva_file)
+filemenu.add_command(label="Exit", command=Quit_app)
 
 ReferenceMenu = Menu(MainBar, tearoff=0)
 
@@ -119,7 +158,7 @@ FuncMenu = Menu(MainBar, tearoff=0)
 
 FuncMenu.add_command(label="Annientamento", command=Distruzione)
 FuncMenu.add_command(label="Generazione di Numeri", command=Generazione_numeri)
-FuncMenu.add_command(label="Generazione di Nomi", command=Generazione_Nomi)
+FuncMenu.add_command(label="Generazione di Nomi", command=Generazione_nomi)
 
 
 MainBar.add_cascade(label="File", menu=filemenu)
@@ -132,7 +171,9 @@ InputField.pack(side=LEFT, ipady=250)
 
 Bold_Botton.grid(row=0, column=0, sticky=W)
 Italic_Botton.grid(row=0, column=1)
-
+Underline_Botton.grid(row=0, column=2)
+Overstrike_Botton.grid(row=0, column=3)
+Highlight_Botton.grid(row=0, column=4)
 #MainLoop e config
 
 root.config(menu=MainBar)

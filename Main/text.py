@@ -64,7 +64,11 @@ def Generazione_nomi():
     InputField.insert("1.0", name_List[k])
 
 def Generazione_citta():
-    pass
+    r = random.randint(0, 9)
+
+    list = ["Roma", "Berlino", "Foggia", "Barcellona", "Bari", "Barletta", "Molfetta", "Udine", "Torino", "Firenze"]
+
+    InputField.insert("1.0", list[r])
 #Funzioni della SottoBar
     
 def Bold_it():
@@ -123,20 +127,27 @@ def overstrike():
 
 def add_highlighter():
    InputField.tag_add("start", "sel.first","sel.last")
-   InputField.tag_config("start", background= "yellow", foreground= "Blue")
+   InputField.tag_config("start", background= "yellow", foreground= "Black")
 
 #Frame
 
 tool_frame = Frame(root)
 tool_frame.pack(fill=X)
 
+#Font style
+BoldFont = font.Font(size = 8, weight = "bold")
+ItalicFont = font.Font(size = 8, slant="italic")
+UnderlineFont = font.Font(size = 8, underline=TRUE)
+OverstrikeFont = font.Font(size = 8, overstrike=TRUE)
+
+
 #Label
 InputField= Text(root, width=232, border=5, background=color)
 
-Bold_Botton = Button(tool_frame, text="Bold", command=Bold_it)
-Italic_Botton = Button(tool_frame, text="Italic", command=italic)
-Underline_Botton = Button(tool_frame, text="Sottolinea", command=underline)
-Overstrike_Botton = Button(tool_frame, text="Overstrike", command=overstrike)
+Bold_Botton = Button(tool_frame, text="B", command=Bold_it , font=BoldFont, width=2)
+Italic_Botton = Button(tool_frame, text="I", command=italic, font=ItalicFont, width=2)
+Underline_Botton = Button(tool_frame, text="U", command=underline, font=UnderlineFont, width=2)
+Overstrike_Botton = Button(tool_frame, text="S", command=overstrike, font=OverstrikeFont, width=2)
 Highlight_Botton = Button(tool_frame, text="Evidenzia", command=add_highlighter)
 
 #MainBAr
@@ -157,8 +168,9 @@ ReferenceMenu.add_command(label="Riferimento", command=Riferimento)
 FuncMenu = Menu(MainBar, tearoff=0)
 
 FuncMenu.add_command(label="Annientamento", command=Distruzione)
-FuncMenu.add_command(label="Generazione di Numeri", command=Generazione_numeri)
-FuncMenu.add_command(label="Generazione di Nomi", command=Generazione_nomi)
+FuncMenu.add_command(label="Generatore di Numeri", command=Generazione_numeri)
+FuncMenu.add_command(label="Generatore di Nomi", command=Generazione_nomi)
+FuncMenu.add_command(label="Generatore di Città", command=Generazione_citta)
 
 
 MainBar.add_cascade(label="File", menu=filemenu)
